@@ -15,6 +15,14 @@ Mastermind::Mastermind(string solution)
 };
 
 void Mastermind::new_solution() {
+  std::random_device dev;
+  std::mt19937 rng(dev());
+  std::uniform_int_distribution<std::mt19937::result_type> dist6(97, 102); // [a,f]
+  sequence = "";
+  for(int i = 0; i < 4; ++i)
+    sequence += (char) dist6(rng);
+  m_solution = sequence;
+}
   
 };
 

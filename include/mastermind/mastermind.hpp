@@ -7,14 +7,15 @@ using std::vector;
 class Mastermind {
  public:
   Mastermind();
-  
+
   Mastermind(string solution);
-  
-  void new_solution();  
+
+  void new_solution();
 
   void set_solution(string sequence);
 
   string check_guess(string sequence);
+
  private:
   vector<int> count_letter_instances(string sequence);
 

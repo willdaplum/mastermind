@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.23)
 
 project(
-  MyFibonacci
+  Mastermind
   VERSION 0.0.0
   DESCRIPTION "A starter C++ project for generating a Fibonacci sequence."
   HOMEPAGE_URL https://github.com/threeal/cpp-starter
   LANGUAGES CXX
 )
 
-option(MY_FIBONACCI_ENABLE_TESTS "Enable test targets.")
-option(MY_FIBONACCI_ENABLE_INSTALL "Enable install targets."
+option(MASTERMIND_ENABLE_TESTS "Enable test targets.")
+option(MASTERMIND_ENABLE_INSTALL "Enable install targets."
   "${PROJECT_IS_TOP_LEVEL}")
 
 function(cpmaddpackage)
@@ -23,7 +23,7 @@ function(cpmaddpackage)
   cpmaddpackage(${ARGN})
 endfunction()
 
-if(MY_FIBONACCI_ENABLE_TESTS)
+if(MASTERMIND_ENABLE_TESTS)
   find_package(CheckWarning 3.2.0 QUIET)
   if(NOT CheckWarning_FOUND)
     cpmaddpackage(gh:threeal/CheckWarning.cmake@3.2.0)
@@ -36,19 +36,19 @@ if(NOT argparse_FOUND)
   cpmaddpackage(gh:p-ranav/argparse@3.2)
 endif()
 
-add_library(sequence src/sequence.cpp)
+add_library(mastermind src/mastermind.cpp)
 target_sources(
-  sequence PUBLIC
+  mastermind PUBLIC
   FILE_SET HEADERS
   BASE_DIRS include
-  FILES include/my_fibonacci/sequence.hpp
+  FILES include/mastermind/mastermind.hpp
 )
-target_compile_features(sequence PRIVATE cxx_std_11)
+target_compile_features(mastermind PRIVATE cxx_std_11)
 
-add_executable(generate_sequence src/main.cpp)
-target_link_libraries(generate_sequence PUBLIC argparse::argparse sequence)
+add_executable(mastermind_cli src/main.cpp)
+target_link_libraries(mastermind_cli PUBLIC argparse::argparse mastermind)
 
-if(MY_FIBONACCI_ENABLE_TESTS)
+if(MASTERMIND_ENABLE_TESTS)
   enable_testing()
 
   find_package(ut QUIET)
@@ -61,20 +61,20 @@ if(MY_FIBONACCI_ENABLE_TESTS)
     )
   endif()
 
-  get_target_property(sequence_SOURCES sequence SOURCES)
-  get_target_property(sequence_HEADER_DIRS sequence HEADER_DIRS)
+  get_target_property(mastermind_SOURCES mastermind SOURCES)
+  get_target_property(mastermind_HEADER_DIRS mastermind HEADER_DIRS)
 
-  add_executable(sequence_test test/sequence_test.cpp ${sequence_SOURCES})
-  target_include_directories(sequence_test PRIVATE ${sequence_HEADER_DIRS})
-  target_link_libraries(sequence_test PRIVATE Boost::ut)
+  add_executable(mastermind_test test/mastermind_test.cpp ${mastermind_SOURCES})
+  target_include_directories(mastermind_test PRIVATE ${mastermind_HEADER_DIRS})
+  target_link_libraries(mastermind_test PRIVATE Boost::ut)
 
   include(cmake/CheckCoverage.cmake)
-  target_check_coverage(sequence_test)
+  target_check_coverage(mastermind_test)
 
-  add_test(NAME "Sequence Test" COMMAND sequence_test)
+  add_test(NAME "Mastermind Test" COMMAND mastermind_test)
 endif()
 
-if(MY_FIBONACCI_ENABLE_TESTS)
+if(MASTERMIND_ENABLE_TESTS)
   find_package(FixFormat QUIET)
   if(NOT FixFormat_FOUND)
     cpmaddpackage(gh:threeal/FixFormat.cmake@1.1.1)
@@ -84,32 +84,32 @@ if(MY_FIBONACCI_ENABLE_TESTS)
   add_fix_format()
 endif()
 
-if(MY_FIBONACCI_ENABLE_INSTALL)
+if(MASTERMIND_ENABLE_INSTALL)
   install(
-    TARGETS generate_sequence sequence
-    EXPORT my_fibonacci_targets
+    TARGETS mastermind_cli mastermind
+    EXPORT mastermind_targets
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
     FILE_SET HEADERS
   )
 
   install(
-    EXPORT my_fibonacci_targets
-    FILE MyFibonacciTargets.cmake
-    NAMESPACE my_fibonacci::
-    DESTINATION lib/cmake/MyFibonacci
+    EXPORT mastermind_targets
+    FILE MastermindTargets.cmake
+    NAMESPACE mastermind::
+    DESTINATION lib/cmake/Mastermind
   )
 
   include(CMakePackageConfigHelpers)
   write_basic_package_version_file(
-    MyFibonacciConfigVersion.cmake
+    MastermindConfigVersion.cmake
     COMPATIBILITY SameMajorVersion
   )
 
   install(
     FILES
-      cmake/MyFibonacciConfig.cmake
-      ${CMAKE_CURRENT_BINARY_DIR}/MyFibonacciConfigVersion.cmake
-    DESTINATION lib/cmake/MyFibonacci
+      cmake/MastermindConfig.cmake
+      ${CMAKE_CURRENT_BINARY_DIR}/MastermindConfigVersion.cmake
+    DESTINATION lib/cmake/Mastermind
   )
 endif()

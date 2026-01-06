@@ -2,34 +2,29 @@
 
 #include <boost/ut.hpp>
 
-using my_fibonacci::fibonacci_sequence;
 using namespace boost::ut;
 
 int main() {
   Mastermind m = Mastermind();
   m.set_solution("abcd");
-  should("guessing with solution abcd") = [] {
-    expect(mastermind.check_solution("aaaa") == "ynnn");
-    expect(mastermind.check_solution("bbbb") == "ynnn");
-    expect(mastermind.check_solution("cccc") == "ynnn");
-    expect(mastermind.check_solution("dddd") == "ynnn");
-    expect(mastermind.check_solution("dcba") == "wwww");
-    expect(mastermind.check_solution("bacd") == "yyww");
-    expect(mastermind.check_solution("eacd") == "yywn");
-    expect(mastermind.check_solution("eeee") == "nnnn");
-    expect(mastermind.check_solution("eeea") == "wnnn");
-  };
+  expect(m.check_guess("aaaa") == "ynnn");
+  expect(m.check_guess("bbbb") == "ynnn");
+  expect(m.check_guess("cccc") == "ynnn");
+  expect(m.check_guess("dddd") == "ynnn");
+  expect(m.check_guess("dcba") == "wwww");
+  expect(m.check_guess("bacd") == "yyww");
+  expect(m.check_guess("eacd") == "yywn");
+  expect(m.check_guess("eeee") == "nnnn");
+  expect(m.check_guess("eeea") == "wnnn");
 
   m.set_solution("eaba");
-  should("guessing with solution eaba") = [] {
-    expect(mastermind.check_solution("aaaa") == "yynn");
-    expect(mastermind.check_solution("bbbb") == "ynnn");
-    expect(mastermind.check_solution("eeee") == "ynnn");
-    expect(mastermind.check_solution("eabc") == "yyyn");
-    expect(mastermind.check_solution("abae") == "wwww");
-    expect(mastermind.check_solution("ffff") == "nnnn");
-    expect(mastermind.check_solution("aabe") == "yyww");
-    expect(mastermind.check_solution("afaf") == "wwnn");
-    expect(mastermind.check_solution("fafa") == "yynn");
-  };
+  expect(m.check_guess("aaaa") == "yynn");
+  expect(m.check_guess("bbbb") == "ynnn");
+  expect(m.check_guess("eeee") == "ynnn");
+  expect(m.check_guess("eabc") == "yyyn");
+  expect(m.check_guess("abae") == "wwww");
+  expect(m.check_guess("ffff") == "nnnn");
+  expect(m.check_guess("aabe") == "yyww");
+  expect(m.check_guess("afaf") == "wwnn");
+  expect(m.check_guess("fafa") == "yynn");
 }

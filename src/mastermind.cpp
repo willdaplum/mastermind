@@ -51,4 +51,5 @@ vector<int> Mastermind::count_letter_instances(string sequence) {
   for(char c : sequence) {
     count[c - 97]++;
   }
+  return count;
 };

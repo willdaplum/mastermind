@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
   else if (check_input(user_solution))
     m = Mastermind(user_solution);
   else {
-    std::cout << "Malformatted solution. must be 4 letters, and only contain "
+    std::cout << "Invalid format:  must be 4 letters, and only contain "
                  "abcdef\n";
   }
 
@@ -47,7 +47,13 @@ int main(int argc, char** argv) {
     std::cout << "Enter guess:\n";
     std::cin >> guess;
     if (check_input(guess)) {
-      std::cout << m.check_guess(guess) << "\n";
+      std::string hint = m.check_guess(guess);
+      std::cout << "Hint: " << hint;
+      if (hint == "yyyy") {
+        std::cout << " (you win)";
+        break;
+      }
+      std::cout << "\n";
     } else if (guess == "exit") {
       break;
     } else {

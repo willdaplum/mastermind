@@ -34,7 +34,8 @@ void Mastermind::set_solution(string sequence) {
 string Mastermind::check_guess(string sequence) {
   string hint = "";
   vector<int> guess_count = count_letter_instances(sequence);
-  vector<int> temp_solution_count = m_solution_count; // modified for calculating hint
+  vector<int> temp_solution_count =
+      m_solution_count;  // modified for calculating hint
   for (int i = 0; i < 4; ++i) {
     if (m_solution.at(i) == sequence.at(i)) {
       hint += 'y';
